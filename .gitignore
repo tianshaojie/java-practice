@@ -1,0 +1,13 @@
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+keystore/
+
+# Intellij project files
+*.ipr
+*.iws
+*.iml
+.idea/
