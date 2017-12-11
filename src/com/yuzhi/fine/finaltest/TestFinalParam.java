@@ -1,4 +1,4 @@
-package com.yuzhi.fine.test_final;
+package com.yuzhi.fine.finaltest;
 
 /**
  * Created by tiansj on 17/6/17.
