@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author tianshaojie
  * @date 2017/12/14
  */
-public class CustomThreadPoolExecutor {
+public class CustomThreadPool {
 
     public static void main(String[] args) {
 
-        CustomThreadPoolExecutor exec = new CustomThreadPoolExecutor();
+        CustomThreadPool exec = new CustomThreadPool();
         // 1.初始化
         exec.init();
 
@@ -37,8 +37,21 @@ public class CustomThreadPoolExecutor {
 //                }
 //            });
 
-            pool.execute(new PraiseRunnable(j+"") {
+//            pool.execute(new PraiseRunnable(j+"") {
+//
+//                @Override
+//                public void run() {
+//                    try {
+//                        System.out.println(">>> ThreadName: " + Thread.currentThread().getName() + ", RunnableNum:" + j + " is running");
+//                        TimeUnit.SECONDS.sleep(2);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
 
+
+            pool.execute(new PriorityRunnable(j) {
                 @Override
                 public void run() {
                     try {
@@ -84,7 +97,8 @@ public class CustomThreadPoolExecutor {
                 3,
                 30,
                 TimeUnit.MINUTES,
-                new ArrayBlockingQueue<Runnable>(5),
+                new PriorityBlockingQueue<>(5, new PriorityCompare()),
+//                new ArrayBlockingQueue<Runnable>(5),
                 new CustomThreadFactory(),
                 new CustomRejectedExecutionHandler());
 
@@ -120,7 +134,7 @@ public class CustomThreadPoolExecutor {
         @Override
         public Thread newThread(Runnable runnable) {
             Thread thread = new Thread(runnable);
-            thread.setName("CustomThreadPoolExecutor" + count.addAndGet(1));
+            thread.setName("CustomThreadPool" + count.addAndGet(1));
             return thread;
         }
     }
