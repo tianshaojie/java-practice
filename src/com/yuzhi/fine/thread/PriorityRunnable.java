@@ -1,7 +1,5 @@
 package com.yuzhi.fine.thread;
 
-import java.util.concurrent.Callable;
-
 /**
  * @author tianshaojie
  * @date 2017/12/19

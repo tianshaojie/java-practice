@@ -96,7 +96,7 @@ public class CustomThreadPool {
                 1,
                 3,
                 30,
-                TimeUnit.MINUTES,
+                TimeUnit.SECONDS,
                 new PriorityBlockingQueue<>(5, new PriorityCompare()),
 //                new ArrayBlockingQueue<Runnable>(5),
                 new CustomThreadFactory(),
