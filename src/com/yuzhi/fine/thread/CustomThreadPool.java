@@ -77,6 +77,7 @@ public class CustomThreadPool {
     }
 
     private ThreadPoolExecutor pool = null;
+    private PriorityBlockingQueue queue;
 
     /**
      * 线程池初始化方法
@@ -92,12 +93,13 @@ public class CustomThreadPool {
      *                                任务会交给RejectedExecutionHandler来处理
      */
     private void init() {
+        queue = new PriorityBlockingQueue<>(5, new PriorityCompare());
         pool = new ThreadPoolExecutor(
                 1,
                 3,
                 30,
                 TimeUnit.SECONDS,
-                new PriorityBlockingQueue<>(5, new PriorityCompare()),
+                queue,
 //                new ArrayBlockingQueue<Runnable>(5),
                 new CustomThreadFactory(),
                 new CustomRejectedExecutionHandler());

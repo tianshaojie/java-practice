@@ -17,7 +17,7 @@ public class LiveRoomThreadPool {
 
 
     private ThreadPoolExecutor threadPoolExecutor;
-    private PriorityBlockingQueue queue;
+    private BoundedPriorityBlockingQueue queue;
 
 
     public static LiveRoomThreadPool getInstance() {
@@ -38,7 +38,7 @@ public class LiveRoomThreadPool {
      * rejectedExecutionHandler 当提交任务数超过maximumPoolSize+workQueue之和时，即当提交第56个任务时会交给RejectedExecutionHandler来处理
      */
     private void init() {
-        queue = new PriorityBlockingQueue<>(50, new PriorityCompare<>());
+        queue = new BoundedPriorityBlockingQueue<>(300, new PriorityCompare<>());
         threadPoolExecutor = new ThreadPoolExecutor(
                 2,
                 5,
@@ -47,6 +47,7 @@ public class LiveRoomThreadPool {
                 queue,
                 new CustomThreadFactory(),
                 new CustomRejectedExecutionHandler());
+//                new ThreadPoolExecutor.AbortPolicy());
     }
 
     /**
@@ -92,6 +93,12 @@ public class LiveRoomThreadPool {
             }
         } catch (InterruptedException e) {
             threadPoolExecutor.shutdownNow();
+        }
+    }
+
+    public void clearQueue() {
+        if(queue != null) {
+            queue.clear();
         }
     }
 
@@ -174,7 +181,7 @@ public class LiveRoomThreadPool {
         for (int i = 1; i < 100; i++) {
             final int j = i;
             System.out.println("提交第" + i + "个点赞任务!");
-            exec.execute(new PraiseRunnable("PraiseRunnable") {
+            exec.execute(new PraiseRunnable("PraiseRunnable-" + j) {
                 @Override
                 public void run() {
                     try {
@@ -203,6 +210,13 @@ public class LiveRoomThreadPool {
                 }
             });
         }
+
+        exec.execute(new PriorityRunnable(PriorityConstants.PRIORITY_HIGH) {
+            @Override
+            public void run() {
+                exec.clearQueue();
+            }
+        });
 
 
         // 停止
