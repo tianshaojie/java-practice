@@ -16,7 +16,7 @@ public class DoubleCheckSingleton {
      */
     private DoubleCheckSingleton() {
         if(instance != null) {
-            throw new RuntimeException("error instant");
+            throw new RuntimeException("This is not allowed.");
         }
     }
 
@@ -45,7 +45,7 @@ public class DoubleCheckSingleton {
 
 
     public void test() {
-        System.out.println("you got me");
+        System.out.println("hello");
     }
 
     public static void main(String[] args) {
