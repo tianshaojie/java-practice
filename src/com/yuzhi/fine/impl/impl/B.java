@@ -1,4 +1,6 @@
-package com.yuzhi.fine.impl;
+package com.yuzhi.fine.impl.impl;
+
+import com.yuzhi.fine.impl.IInterface;
 
 public class B implements IInterface {
     @Override

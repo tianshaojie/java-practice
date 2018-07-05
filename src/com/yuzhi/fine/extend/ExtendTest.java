@@ -9,6 +9,12 @@ public class ExtendTest {
 		
 		sayName(a);
 		sayName(b);
+
+		System.out.println((new Parent()).hashCode());
+		System.out.println((new Parent()).hashCode());
+		System.out.println(new Parent());
+		System.out.println(new Parent());
+
 	}
 	
 	public static void sayName(Parent p) {

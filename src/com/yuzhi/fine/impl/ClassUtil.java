@@ -22,7 +22,8 @@ public class ClassUtil {
         List returnClassList = new ArrayList<Class>();
         //判断是不是接口,不是接口不作处理
         if(c.isInterface()){
-            String packageName = c.getPackage().getName();  //获得当前包名
+//            String packageName = c.getPackage().getName();  //获得当前包名
+            String packageName = "com.yuzhi.fine";
             try {
                 List<Class> allClass = getClasses(packageName);//获得当前包以及子包下的所有类
 
@@ -118,6 +119,7 @@ public class ClassUtil {
         }
 
     }
+
 
 
 }
