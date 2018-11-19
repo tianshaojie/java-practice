@@ -12,6 +12,12 @@ import java.util.Map;
 public class TempTest {
 
     public static void main(String[] args) {
+
+        String userAgent = String.format("%s/%s (%s;Android %s)", null, null, null, null);
+        System.out.println(userAgent);
+
+        System.out.println(System.currentTimeMillis());
+
         String url = "scheme=fzzqxf%3a%2f%2fbrowser%2f%3ftitle%3dfoundersc%26url%3dhttps%3a%2f%2fwww.foundersc.com";
         try {
             Map map = splitQuery(url);
@@ -33,6 +39,11 @@ public class TempTest {
         }
 
 
+
+        String str = "12345abcde";
+        for(int i = 0; i < str.length(); i++) {
+            System.out.println(String.valueOf(str.charAt(i)).toUpperCase());
+        }
     }
 
 
