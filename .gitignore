@@ -11,3 +11,4 @@ keystore/
 *.iws
 *.iml
 .idea/
+.gradle/
