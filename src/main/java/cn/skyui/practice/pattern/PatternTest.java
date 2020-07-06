@@ -1,6 +1,6 @@
 package cn.skyui.practice.pattern;
 
-import com.sun.deploy.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

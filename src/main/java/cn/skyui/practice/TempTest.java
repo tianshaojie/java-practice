@@ -49,12 +49,47 @@ public class TempTest {
 //        int len = mobile.length();
 //        System.out.println(mobile.substring(len-4, len));
 
-        try {
-            testException();
-        } catch (Exception e) {
-            e.printStackTrace();
+//        try {
+//            testException();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("testException");
+
+        System.out.println(compareVersion("6.0.0.2", "6.0.0.1"));
+    }
+
+    public static int compareVersion(String oldVersion, String newVersion) {
+        if (null == newVersion || "".equals(newVersion) || null == oldVersion || "".equals(
+                oldVersion)) {
+            return 0;
         }
-        System.out.println("testException");
+        String[] v1 = oldVersion.split("\\.");
+        String[] v2 = newVersion.split("\\.");
+        if (v1.length < v2.length) { // 如果版本.长度不一样，后面的缺省为0，如果保证长度一样，这里可以不需要
+            String[] t = new String[v2.length];
+            System.arraycopy(v1, 0, t, 0, v1.length);
+            for (int i = v1.length; i < t.length; i++) {
+                t[i] = "0";
+            }
+            v1 = t;
+        } else if (v1.length > v2.length) {
+            String[] t = new String[v1.length];
+            System.arraycopy(v2, 0, t, 0, v2.length);
+            for (int i = v2.length; i < t.length; i++) {
+                t[i] = "0";
+            }
+            v2 = t;
+        }
+
+        for (int i = 0; i < v1.length; i++) {
+            int n1 = Integer.valueOf(v1[i]).intValue();
+            int n2 = Integer.valueOf(v2[i]).intValue();
+            if (n1 != n2) {
+                return (n1 - n2); // 大于0则s1版本大，小于0则s2版本大
+            }
+        }
+        return 0; // 相等
     }
 
 

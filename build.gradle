@@ -8,10 +8,13 @@ version '1.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+    google()
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.alibaba:fastjson:1.2.58'
+    compile 'com.alibaba:fastjson:1.2.70'
+    compile 'org.apache.commons:commons-lang3:3.9'
 }
