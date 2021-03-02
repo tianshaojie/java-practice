@@ -1,6 +1,10 @@
 package cn.skyui.practice;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
@@ -56,7 +60,26 @@ public class TempTest {
 //        }
 //        System.out.println("testException");
 
-        System.out.println(compareVersion("6.0.0.2", "6.0.0.1"));
+//        System.out.println(compareVersion("6.0.0.2", "6.0.0.1"));
+
+
+
+            Socket s = new Socket();
+            SocketAddress socketAddress = new InetSocketAddress("app.cnht.com.cn", 80);
+            try {
+                s.connect(socketAddress, 3000);// 超时3秒
+                System.out.printf("connect success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    s.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
     }
 
     public static int compareVersion(String oldVersion, String newVersion) {
