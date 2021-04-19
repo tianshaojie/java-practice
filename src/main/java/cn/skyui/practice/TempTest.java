@@ -2,6 +2,7 @@ package cn.skyui.practice;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -9,6 +10,8 @@ import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by tiansj on 2017/10/1.
@@ -64,20 +67,49 @@ public class TempTest {
 
 
 
-            Socket s = new Socket();
-            SocketAddress socketAddress = new InetSocketAddress("app.cnht.com.cn", 80);
-            try {
-                s.connect(socketAddress, 3000);// 超时3秒
-                System.out.printf("connect success");
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    s.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+//            Socket s = new Socket();
+//            SocketAddress socketAddress = new InetSocketAddress("app.cnht.com.cn", 80);
+//            try {
+//                s.connect(socketAddress, 3000);// 超时3秒
+//                System.out.printf("connect success");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            } finally {
+//                try {
+//                    s.close();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
+//        String log = "2 packets transmitted, 2 received, 100.0% packet loss";
+//        String loss = null;
+//        String regex = "(\\d+(\\.\\d+)?)% packet loss";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(log);
+//        while (m.find()) {
+//            loss = m.group(1);
+//        }
+//        try {
+//            System.out.println("loss = " + new BigDecimal(loss).doubleValue());
+//        } catch (Exception exception) {
+//            System.out.println("loss = 0.00");
+//        }
+
+        String log = "ping qq.com (183.3.226.35) 56(84) bytes of data.; 64 bytes from 183.3.226.35: icmp_seq=1 ttl=50 time=48.12 ms; 1 packets transmitted, 1 received, 0% packet loss, time 0ms; rtt min/avg/max/mdev = 48.787/48.787/48.787/0.000 ms";
+        String time = "";
+//        String regex = "time=([(\\d+(\\.\\d+)?)\\s]+)(?= ms)";
+        String regex = "time=(\\d+(\\.\\d+)?)\\s?ms";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(log);
+        while (m.find()) {
+            time = m.group(1).trim();
+        }
+        try {
+            System.out.println("time = " + new BigDecimal(time).doubleValue());
+        } catch (Exception exception) {
+            System.out.println("loss = .00");
+        }
 
 
     }
