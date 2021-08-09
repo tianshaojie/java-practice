@@ -96,20 +96,24 @@ public class TempTest {
 //            System.out.println("loss = 0.00");
 //        }
 
-        String log = "ping qq.com (183.3.226.35) 56(84) bytes of data.; 64 bytes from 183.3.226.35: icmp_seq=1 ttl=50 time=48.12 ms; 1 packets transmitted, 1 received, 0% packet loss, time 0ms; rtt min/avg/max/mdev = 48.787/48.787/48.787/0.000 ms";
-        String time = "";
-//        String regex = "time=([(\\d+(\\.\\d+)?)\\s]+)(?= ms)";
-        String regex = "time=(\\d+(\\.\\d+)?)\\s?ms";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(log);
-        while (m.find()) {
-            time = m.group(1).trim();
-        }
-        try {
-            System.out.println("time = " + new BigDecimal(time).doubleValue());
-        } catch (Exception exception) {
-            System.out.println("loss = .00");
-        }
+//        String log = "ping qq.com (183.3.226.35) 56(84) bytes of data.; 64 bytes from 183.3.226.35: icmp_seq=1 ttl=50 time=48.12 ms; 1 packets transmitted, 1 received, 0% packet loss, time 0ms; rtt min/avg/max/mdev = 48.787/48.787/48.787/0.000 ms";
+//        String time = "";
+////        String regex = "time=([(\\d+(\\.\\d+)?)\\s]+)(?= ms)";
+//        String regex = "time=(\\d+(\\.\\d+)?)\\s?ms";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(log);
+//        while (m.find()) {
+//            time = m.group(1).trim();
+//        }
+//        try {
+//            System.out.println("time = " + new BigDecimal(time).doubleValue());
+//        } catch (Exception exception) {
+//            System.out.println("loss = .00");
+//        }
+
+        String temp = null;
+        boolean res = "a".equals(temp);
+        System.out.printf(String.valueOf(res));
 
 
     }
