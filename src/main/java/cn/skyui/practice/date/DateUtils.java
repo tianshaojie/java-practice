@@ -24,7 +24,7 @@ public class DateUtils {
 //
 //        System.out.println(getDayOfBefore("20180101", sdf));
 
-        printMonthDay(2021,7);
+        printMonthDay(2021,8);
     }
 
 

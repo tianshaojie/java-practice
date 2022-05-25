@@ -1,5 +1,14 @@
 package cn.skyui.practice;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -7,9 +16,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,12 +123,265 @@ public class TempTest {
 //            System.out.println("loss = .00");
 //        }
 
-        String temp = null;
-        boolean res = "a".equals(temp);
-        System.out.printf(String.valueOf(res));
+//        String temp = null;
+//        boolean res = "a".equals(temp);
+//        System.out.printf(String.valueOf(res));
 
 
+//        Map<String, Boolean> serverIpv6Map = new HashMap<>();
+//        serverIpv6Map.put("abc",true);
+//        serverIpv6Map.put("abc",true);
+//        serverIpv6Map.put("abc",false);
+//        System.out.println(serverIpv6Map.size() + ", " + serverIpv6Map.get("abc"));
+
+
+//        BigDecimal res = BigDecimal.valueOf(6).subtract(BigDecimal.valueOf(3)).divide(BigDecimal.valueOf(3));
+//        System.out.println("res=" + res.toString());
+
+//        testBitDecimal();
+
+//        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+//        System.out.printf("currentHour = " + currentHour);
+
+        System.out.println(sha1Hash("abc"));
     }
+
+
+    private static String sha1Hash (String toHash) {
+        String hash = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance( "SHA-1" );
+            byte[] bytes = toHash.getBytes("UTF-8");
+            digest.update(bytes, 0, bytes.length);
+            bytes = digest.digest();
+
+            // This is ~55x faster than looping and String.formating()
+            hash = bytesToHex( bytes );
+        }
+        catch( Throwable e ) {
+        }
+        return hash;
+    }
+
+    final private static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex( byte[] bytes ) {
+        char[] hexChars = new char[ bytes.length * 2 ];
+        for( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[ j ] & 0xFF;
+            hexChars[ j * 2 ] = hexArray[ v >>> 4 ];
+            hexChars[ j * 2 + 1 ] = hexArray[ v & 0x0F ];
+        }
+        return new String( hexChars );
+    }
+
+    private static void testBitDecimal() {
+//        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+//        System.out.println(decimalFormat.format(new BigDecimal("234.8989")));
+//        System.out.println(decimalFormat.format(new BigDecimal("234.89")));
+//        System.out.println(decimalFormat.format(new BigDecimal("234.8")));
+//        System.out.println(decimalFormat.format(new BigDecimal("234")));
+//        System.out.println(decimalFormat.format(new BigDecimal(".8989")));
+//        System.out.println(decimalFormat.format(new BigDecimal("0.156")));
+//        System.out.println(decimalFormat.format(new BigDecimal("0.2351")));
+//        System.out.println(decimalFormat.format(0.2351));
+//
+//        BigDecimal value = new BigDecimal("234.8989").setScale(1,BigDecimal.ROUND_HALF_UP);
+//        // 不足两位小数补0
+//        DecimalFormat decimalFormat1 = new DecimalFormat("0.00");
+//        System.out.println(decimalFormat1.format(value));
+
+
+//        try {
+//            BigDecimal prevEffectivePrice = new BigDecimal("-");
+//            BigDecimal times = new BigDecimal(1).divide(prevEffectivePrice, 2, BigDecimal.ROUND_HALF_EVEN);
+//            if(times.compareTo(BigDecimal.valueOf(10)) > 0 || times.compareTo(BigDecimal.valueOf(0.1)) < 0) {
+//                System.out.println("times="+times);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+//        try {
+//            updateAssetStartTime = new SimpleDateFormat(ASSET_TIME_FORMAT).parse(UPDATE_ASSET_START_TIME);
+//            updateAssetEndTime = new SimpleDateFormat(ASSET_TIME_FORMAT).parse(UPDATE_ASSET_END_TIME);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        long timestampServer = 1639038096194l;
+//        long timestampLocal = 1639038096407l;
+//
+//        boolean isUpdateAssetTime = isUpdateAssetTime(timestampServer, timestampLocal);
+//        System.out.println("isUpdateAssetTime=" + isUpdateAssetTime);
+
+
+//        testRxjava();
+
+        startTimer();
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(5000);
+//                    // 3秒后停止
+//                    disposable.dispose();
+//                    disposable = null;
+//                    // 5秒后恢复
+//                    Thread.sleep(5000);
+//                    startTimer();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }).start();
+    }
+
+    private static void startTimer() {
+        stopTimer();
+        // 每隔200毫秒执行一次逻辑代码
+        disposable = Observable.interval(200, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        System.out.println(aLong++);
+                    }
+                });
+    }
+
+    /**
+     * 停止定时执行
+     */
+    protected static void stopTimer() {
+        if (null != disposable) {
+            disposable.dispose();
+            disposable = null;
+        }
+    }
+
+
+
+    private static Observable observable;
+    private static ObservableEmitter observableEmitter;
+    private static Disposable disposable;
+
+    private static void testRxjava() {
+        observable = Observable.create(new ObservableOnSubscribe() {
+            @Override
+            public void subscribe(ObservableEmitter emitter) throws Exception {
+                observableEmitter = emitter;
+                // send events with simulated time wait
+//                observableEmitter.onNext(1); // skip
+//                Thread.sleep(400);
+//                observableEmitter.onNext(2); // deliver
+//                Thread.sleep(505);
+//                observableEmitter.onNext(3); // skip
+//                Thread.sleep(100);
+//                observableEmitter.onNext(4); // deliver
+//                Thread.sleep(605);
+//                observableEmitter.onNext(5); // deliver
+//                Thread.sleep(510);
+//                emitter.onComplete();
+            }
+        });
+
+
+        observable.debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(@NonNull Object o) throws Exception {
+                        System.out.println(o.toString());
+                    }
+                });
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i = 0; i < Integer.MAX_VALUE; i++) {
+                    if(i % 2 == 0) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    observableEmitter.onNext(i);
+                    } else {
+                        try {
+                            Thread.sleep(600);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        }).start();
+    }
+
+
+    private static final String ASSET_TIME_FORMAT = "HH:mm";
+    private static final String UPDATE_ASSET_START_TIME = "09:00";
+    private static final String UPDATE_ASSET_END_TIME = "15:00";
+    private static Date updateAssetStartTime;
+    private static Date updateAssetEndTime;
+
+
+    /**
+     * 上证云更新现价的时间范围：交易日9:00之前或16:00，
+     */
+    private static boolean isUpdateAssetTime(long timestampServer, long timestampLocal) {
+        long timeDiff = 1639038096500l - timestampLocal;
+        long currentTime = timestampServer + timeDiff;
+        try {
+            String nowTimeStr = new SimpleDateFormat(ASSET_TIME_FORMAT).format(new Date(currentTime));
+            Date nowTime = new SimpleDateFormat(ASSET_TIME_FORMAT).parse(nowTimeStr);
+            return isEffectiveDate(nowTime, updateAssetStartTime, updateAssetEndTime);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * 判断当前时间是否在[startTime, endTime]区间，注意时间格式要一致
+     * String format = "HH:mm:ss";
+     * Date nowTime = new SimpleDateFormat(format).parse("09:27:00");
+     * Date startTime = new SimpleDateFormat(format).parse("09:27:00");
+     * Date endTime = new SimpleDateFormat(format).parse("09:27:59");
+     * @param nowTime 当前时间
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return
+     */
+    public static boolean isEffectiveDate(Date nowTime, Date startTime, Date endTime) {
+        if(nowTime == null || startTime == null || endTime == null) {
+            return false;
+        }
+        if (nowTime.getTime() == startTime.getTime()
+                || nowTime.getTime() == endTime.getTime()) {
+            return true;
+        }
+
+        Calendar date = Calendar.getInstance();
+        date.setTime(nowTime);
+
+        Calendar begin = Calendar.getInstance();
+        begin.setTime(startTime);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(endTime);
+
+        if (date.after(begin) && date.before(end)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public static int compareVersion(String oldVersion, String newVersion) {
         if (null == newVersion || "".equals(newVersion) || null == oldVersion || "".equals(
