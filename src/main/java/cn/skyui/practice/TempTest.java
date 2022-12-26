@@ -1,5 +1,6 @@
 package cn.skyui.practice;
 
+import com.alibaba.fastjson.JSON;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -132,6 +133,7 @@ public class TempTest {
 //        serverIpv6Map.put("abc",true);
 //        serverIpv6Map.put("abc",true);
 //        serverIpv6Map.put("abc",false);
+//        System.out.println(serverIpv6Map.toString());
 //        System.out.println(serverIpv6Map.size() + ", " + serverIpv6Map.get("abc"));
 
 
@@ -143,7 +145,12 @@ public class TempTest {
 //        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 //        System.out.printf("currentHour = " + currentHour);
 
-        System.out.println(sha1Hash("abc"));
+//        System.out.println(sha1Hash("abc"));
+
+
+        String str = "a|b|c|d|e";
+        String[] arr = str.split("[|]", 2);
+        System.out.println(JSON.toJSONString(arr));
     }
 
 
