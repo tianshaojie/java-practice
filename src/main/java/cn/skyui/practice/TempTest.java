@@ -9,6 +9,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -148,9 +149,69 @@ public class TempTest {
 //        System.out.println(sha1Hash("abc"));
 
 
-        String str = "a|b|c|d|e";
-        String[] arr = str.split("[|]", 2);
-        System.out.println(JSON.toJSONString(arr));
+//        String str = "a|b|c|d|e";
+//        String[] arr = str.split("[|]", 2);
+//        System.out.println(JSON.toJSONString(arr));
+//
+//        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+//        Date zeroTime = new Date();
+//        System.out.println("zeroTime=" + format.format(zeroTime));
+//        System.out.println(zeroTime.getTime());
+//        zeroTime.setTime(2 * 1000 * 60);
+//        System.out.println(zeroTime.getTime());
+
+//        String time = formatToChartTime("20221227162005");
+//        System.out.println(time);
+
+//        String openTime = "09:30";
+//        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+//        try {
+//            System.out.println(format.parse(openTime).getTime());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+
+        String dateTime = "20221227162005";
+//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
+        try {
+//            long minite1 = sdf1.parse(dateTime).getTime() / 1000;
+//            System.out.println("minite1="+minite1);
+            System.out.println(sdf2.parse(dateTime).toString());
+            long minite2 = sdf2.parse(dateTime).getTime() / 1000;
+            System.out.println("minite2="+minite2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 将时间转到分，用于计算分时根数
+     *
+     * @param mainTime
+     * @return
+     */
+    public static String formatToChartTime(String mainTime) {
+        if (!StringUtils.isEmpty(mainTime) && mainTime.length() >= 12) {
+            String ss = mainTime.substring(12);
+            System.out.println(ss);
+            if (Integer.valueOf(ss) > 0) {
+                //秒大于0就要加一根，也就是为60秒，由系统自动运算分
+                mainTime = mainTime.substring(0, 12) + "60";
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+                try {
+                    Date date = format.parse(mainTime);
+                    //将根数加1的时间重新转为字符串
+                    mainTime = format.format(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            mainTime = mainTime.substring(8, 12);
+        }
+        return mainTime;
     }
 
 
