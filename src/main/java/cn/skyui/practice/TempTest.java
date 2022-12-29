@@ -147,6 +147,20 @@ public class TempTest {
 //        System.out.printf("currentHour = " + currentHour);
 
 //        System.out.println(sha1Hash("abc"));
+//        String code = "SH1001";
+//        String number = Pattern.compile("[^0-9]").matcher(code).replaceAll("");
+//        String zimu = code.replaceAll("[^a-zA-Z].*$", "");
+//        System.out.println("number="+number + ", zimu="+zimu);
+
+
+//        System.out.println(String.format("%08d", 1242314133));; // 输出 "123 "
+
+//        double[][] class_score = {{100, 99, 99, 98, 97}, {100, 98, 97}, {100, 100, 99.5}, {99.5, 99, 98.5}};
+//        for (int i = 0; i < class_score.length; i++) {    //遍历行
+//            for (int j = 0; j < class_score[i].length; j++) {
+//                System.out.println("class_score[" + i + "][" + j + "]=" + class_score[i][j]);
+//            }
+//        }
 
 
 //        String str = "a|b|c|d|e";
@@ -172,15 +186,24 @@ public class TempTest {
 //        }
 
 
-        String dateTime = "20221227162005";
+        String dateTime = "202212231301";
+        String dateTime2 = "202212231303";
 //        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
         try {
 //            long minite1 = sdf1.parse(dateTime).getTime() / 1000;
-//            System.out.println("minite1="+minite1);
-            System.out.println(sdf2.parse(dateTime).toString());
+//            System.out.println("minite="+minite1);
+//            System.out.println(sdf1.parse(dateTime).toString());
+
             long minite2 = sdf2.parse(dateTime).getTime() / 1000;
             System.out.println("minite2="+minite2);
+            System.out.println(sdf2.parse(dateTime).toString());
+            Date date = sdf2.parse(dateTime);
+            System.out.println(sdf2.format(date));
+
+            long minite3 = sdf2.parse(dateTime2).getTime() / 1000;
+            System.out.println("minite3="+minite3);
+            System.out.println(sdf2.parse(dateTime2).toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
