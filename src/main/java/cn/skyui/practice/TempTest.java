@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by tiansj on 2017/10/1.
@@ -186,28 +187,66 @@ public class TempTest {
 //        }
 
 
-        String dateTime = "202212231301";
-        String dateTime2 = "202212231303";
-//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
-        try {
-//            long minite1 = sdf1.parse(dateTime).getTime() / 1000;
-//            System.out.println("minite="+minite1);
-//            System.out.println(sdf1.parse(dateTime).toString());
+//        String dateTime = "202212231301";
+//        String dateTime2 = "202212231303";
+////        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
+//        try {
+////            long minite1 = sdf1.parse(dateTime).getTime() / 1000;
+////            System.out.println("minite="+minite1);
+////            System.out.println(sdf1.parse(dateTime).toString());
+//
+//            long minite2 = sdf2.parse(dateTime).getTime() / 1000;
+//            System.out.println("minite2="+minite2);
+//            System.out.println(sdf2.parse(dateTime).toString());
+//            Date date = sdf2.parse(dateTime);
+//            System.out.println(sdf2.format(date));
+//
+//            long minite3 = sdf2.parse(dateTime2).getTime() / 1000;
+//            System.out.println("minite3="+minite3);
+//            System.out.println(sdf2.parse(dateTime2).toString());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
-            long minite2 = sdf2.parse(dateTime).getTime() / 1000;
-            System.out.println("minite2="+minite2);
-            System.out.println(sdf2.parse(dateTime).toString());
-            Date date = sdf2.parse(dateTime);
-            System.out.println(sdf2.format(date));
+        String[] ips = {"test1","test2","test3","test4","test5"};
+        List<String> list = new ArrayList<>(Arrays.asList(ips));
+//        list.add("test1");
+//        list.add("test2");
+//        list.add("test3");
+//        list.add("test4");
+//        list.add("test5");
+//        String str = "test3";
+//        System.out.println(list.toString());
+//        list.remove(str);
+//        list.add(str);
+//        System.out.println(list.toString());
+//        list.remove(str);
+//        list.add(list.size(), str);
+//        System.out.println(list.toString());
+//        System.out.println(list.toArray(ips)[0]);
+//
+//        System.out.println(Boolean.valueOf("TRUE"));
 
-            long minite3 = sdf2.parse(dateTime2).getTime() / 1000;
-            System.out.println("minite3="+minite3);
-            System.out.println(sdf2.parse(dateTime2).toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        testSection();
+    }
+
+
+    public static void testSection() {
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            list.add(i);
         }
 
+        int section = 10;
+        int accountsSize = list.size();
+        int group = accountsSize / section + (accountsSize % section > 0 ? 1 : 0);
+        for(int i = 0; i < group; i++) {
+            int fromIndex = i * section;
+            int toIndex = i == group - 1 ? accountsSize : (i + 1) * section;
+            List<Integer> subList = list.subList(fromIndex, toIndex);
+            System.out.println("subList=" + subList.toString());
+        }
     }
 
     /**
