@@ -237,7 +237,28 @@ public class TempTest {
         for(int i = 0; i < 10; i++) {
             list.add(i);
         }
+//        String dateTime = "20221227162005";
+////        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
+//        try {
+////            long minite1 = sdf1.parse(dateTime).getTime() / 1000;
+////            System.out.println("minite1="+minite1);
+//            System.out.println(sdf2.parse(dateTime).toString());
+//            long minite2 = sdf2.parse(dateTime).getTime() / 1000;
+//            System.out.println("minite2="+minite2);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
+//        String time = "123";
+//        time = String.format("%08d", Long.parseLong(time));
+//        System.out.println("time="+time);
+
+//        List<MarketingItem> list = new ArrayList<MarketingItem>(3);
+
+//        for(int i = 0; i < 3; i++) {
+//            System.out.println(list.get(i));
+//        }
         int section = 10;
         int accountsSize = list.size();
         int group = accountsSize / section + (accountsSize % section > 0 ? 1 : 0);
@@ -256,7 +277,7 @@ public class TempTest {
      * @return
      */
     public static String formatToChartTime(String mainTime) {
-        if (!StringUtils.isEmpty(mainTime) && mainTime.length() >= 12) {
+        if (mainTime != null && mainTime.length() >= 12) {
             String ss = mainTime.substring(12);
             System.out.println(ss);
             if (Integer.valueOf(ss) > 0) {
