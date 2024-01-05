@@ -1,6 +1,8 @@
 package cn.skyui.practice;
 
+import cn.skyui.practice.utils.SortBean;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -22,6 +24,9 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -209,8 +214,8 @@ public class TempTest {
 //            e.printStackTrace();
 //        }
 
-        String[] ips = {"test1","test2","test3","test4","test5"};
-        List<String> list = new ArrayList<>(Arrays.asList(ips));
+//        String[] ips = {"test1","test2","test3","test4","test5"};
+//        List<String> list = new ArrayList<>(Arrays.asList(ips));
 //        list.add("test1");
 //        list.add("test2");
 //        list.add("test3");
@@ -228,9 +233,41 @@ public class TempTest {
 //
 //        System.out.println(Boolean.valueOf("TRUE"));
 
-        testSection();
+//        testSection();
+
+
+//        LocalTime time = LocalTime.now();
+//        System.out.println("time="+time);
+//        if (time.isAfter(LocalTime.of(2, 0)) && time.isBefore(LocalTime.of(9, 30))) {
+//            System.out.println(1);
+//        } else if (time.isAfter(LocalTime.of(9, 30)) && time.isBefore(LocalTime.of(15, 0))) {
+//            System.out.println(2);
+//        } else {
+//            System.out.println(3);
+//        }
+
+        testMultiSort();
     }
 
+
+    public static void testMultiSort() {
+        List<SortBean> list = new ArrayList<>();
+        SortBean bean1 = new SortBean("20240103", 2);
+        SortBean bean2 = new SortBean("20240103", 1);
+        SortBean bean3 = new SortBean("20240104", 2);
+        SortBean bean4 = new SortBean("20240104", 1);
+        SortBean bean5 = new SortBean("20240104", 1);
+        list.add(bean1);
+        list.add(bean2);
+        list.add(bean3);
+        list.add(bean4);
+        list.add(bean5);
+        Comparator<SortBean> byDate = Comparator.comparing(SortBean::getDate).reversed();
+        Comparator<SortBean> byType = Comparator.comparing(SortBean::getType);
+        list.sort(byDate.thenComparing(byType));
+
+        System.out.println(JSONObject.toJSONString(list));
+    }
 
     public static void testSection() {
         List<Integer> list = new ArrayList<>();
